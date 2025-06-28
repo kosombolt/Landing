@@ -2,20 +2,15 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App.tsx';
 import './index.css';
-import React, { createContext, useContext, useState } from "react";
+import { UserProvider } from "@/context/UserContext";
 
-const UserContext = createContext();
-
-export const UserProvider = ({ children }) => {
-  const [role, setRole] = useState(null);
+export default function App() {
   return (
-    <UserContext.Provider value={{ role, setRole }}>
-      {children}
-    </UserContext.Provider>
+    <UserProvider>
+      <YourRouterOrRoutesHere />
+    </UserProvider>
   );
-};
-
-export const useUser = () => useContext(UserContext);
+}
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
