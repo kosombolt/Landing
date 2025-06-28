@@ -25,4 +25,22 @@ export const useUser = () => {
     throw new Error("useUser must be used within a UserProvider");
   }
   return context;
+  export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const [role, setRoleState] = useState<UserRole>(() => {
+    const savedRole = localStorage.getItem("userRole");
+    return (savedRole as UserRole) || null;
+  });
+
+  const setRole = (newRole: UserRole) => {
+    setRoleState(newRole);
+    if (newRole) localStorage.setItem("userRole", newRole);
+    else localStorage.removeItem("userRole");
+  };
+
+  return (
+    <UserContext.Provider value={{ role, setRole }}>
+      {children}
+    </UserContext.Provider>
+  );
+};
 };
