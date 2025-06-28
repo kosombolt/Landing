@@ -95,6 +95,14 @@ function AppContent() {
     return theme === 'light' ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />;
   };
 
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+    setIsMenuOpen(false);
+  };
+
   // Show auth demo if requested
   if (authPage) {
     return <AuthDemo initialPage={authPage} />;
@@ -125,15 +133,21 @@ function AppContent() {
             </div>
             
             <nav className="hidden md:flex gap-6">
-              {["Features", "For Teachers", "For Parents", "About", "Contact"].map((item) => (
-                <a
-                  key={item}
-                  href={`#${item.toLowerCase().replace(" ", "-")}`}
+              {[
+                { name: "Features", id: "features" },
+                { name: "For Teachers", id: "for-teachers" },
+                { name: "For Parents", id: "for-parents" },
+                { name: "About", id: "about" },
+                { name: "Contact", id: "contact" }
+              ].map((item) => (
+                <button
+                  key={item.name}
+                  onClick={() => scrollToSection(item.id)}
                   className="text-sm font-medium theme-transition hover:text-pink-500 dark:hover:text-pink-400 relative group"
                 >
-                  {item}
+                  {item.name}
                   <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-pink-500 to-purple-600 theme-transition group-hover:w-full"></span>
-                </a>
+                </button>
               ))}
             </nav>
             
@@ -206,16 +220,21 @@ function AppContent() {
                 animate="visible"
                 className="w-full px-6 grid gap-3 pb-8 pt-6 max-w-none"
               >
-                {["Features", "For Teachers", "For Parents", "About", "Contact"].map((item, index) => (
+                {[
+                  { name: "Features", id: "features" },
+                  { name: "For Teachers", id: "for-teachers" },
+                  { name: "For Parents", id: "for-parents" },
+                  { name: "About", id: "about" },
+                  { name: "Contact", id: "contact" }
+                ].map((item, index) => (
                   <motion.div key={index} variants={itemFadeIn}>
-                    <a
-                      href={`#${item.toLowerCase().replace(" ", "-")}`}
-                      className="flex items-center justify-between px-4 py-3 text-lg font-medium rounded-xl theme-transition hover:bg-gray-100/50 dark:hover:bg-gray-800/50"
-                      onClick={toggleMenu}
+                    <button
+                      onClick={() => scrollToSection(item.id)}
+                      className="flex items-center justify-between px-4 py-3 text-lg font-medium rounded-xl theme-transition hover:bg-gray-100/50 dark:hover:bg-gray-800/50 w-full text-left"
                     >
-                      {item}
+                      {item.name}
                       <ChevronRight className="h-4 w-4" />
-                    </a>
+                    </button>
                   </motion.div>
                 ))}
                 <motion.div variants={itemFadeIn} className="pt-4 border-t border-gray-200/50 dark:border-gray-800/50">
@@ -317,7 +336,7 @@ function AppContent() {
           </section>
 
           {/* Why Rafiq Section */}
-          <ScrollRevealSection className="py-20 md:py-32 w-full">
+          <ScrollRevealSection className="py-20 md:py-32 w-full" id="features">
             <div className="w-full px-6 max-w-none">
               <div className="mx-auto max-w-4xl text-center mb-16">
                 <motion.div
@@ -645,8 +664,8 @@ function AppContent() {
             </div>
           </ScrollRevealSection>
 
-          {/* Testimonials */}
-          <ScrollRevealSection className="py-20 md:py-32 bg-gradient-to-br from-purple-50/50 to-pink-50/50 dark:from-purple-950/20 dark:to-pink-950/20 w-full theme-transition">
+          {/* About Section */}
+          <ScrollRevealSection className="py-20 md:py-32 w-full" id="about">
             <div className="w-full px-6 max-w-none">
               <div className="mx-auto max-w-4xl text-center mb-16">
                 <motion.div
@@ -779,7 +798,12 @@ function AppContent() {
                       </div>
                       <div>
                         <h3 className="font-semibold text-gray-900 dark:text-gray-100 theme-transition">Email Us</h3>
-                        <p className="text-gray-600 dark:text-gray-400 theme-transition">hello@rafiq.education</p>
+                        <a 
+                          href="mailto:hello@rafiq.education" 
+                          className="text-gray-600 dark:text-gray-400 theme-transition hover:text-pink-500 dark:hover:text-pink-400"
+                        >
+                          hello@rafiq.education
+                        </a>
                       </div>
                     </div>
                     
@@ -789,7 +813,12 @@ function AppContent() {
                       </div>
                       <div>
                         <h3 className="font-semibold text-gray-900 dark:text-gray-100 theme-transition">Call Us</h3>
-                        <p className="text-gray-600 dark:text-gray-400 theme-transition">+1 (555) RAFIQ-AI</p>
+                        <a 
+                          href="tel:+15557234724" 
+                          className="text-gray-600 dark:text-gray-400 theme-transition hover:text-pink-500 dark:hover:text-pink-400"
+                        >
+                          +1 (555) RAFIQ-AI
+                        </a>
                       </div>
                     </div>
                   </div>
@@ -884,10 +913,17 @@ function AppContent() {
                   Your all-in-one learning companion, built for today's world of distractions.
                 </p>
                 <div className="flex space-x-4">
-                  {[Instagram, Twitter, Linkedin, Facebook].map((Icon, index) => (
+                  {[
+                    { Icon: Instagram, href: "https://instagram.com/rafiq" },
+                    { Icon: Twitter, href: "https://twitter.com/rafiq" },
+                    { Icon: Linkedin, href: "https://linkedin.com/company/rafiq" },
+                    { Icon: Facebook, href: "https://facebook.com/rafiq" }
+                  ].map(({ Icon, href }, index) => (
                     <a
                       key={index}
-                      href="#"
+                      href={href}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="h-10 w-10 border border-gray-300/50 dark:border-gray-700/50 rounded-xl flex items-center justify-center hover:bg-gray-100/50 dark:hover:bg-gray-800/50 theme-transition hover-lift"
                     >
                       <Icon className="h-5 w-5 text-gray-600 dark:text-gray-400 theme-transition" />
@@ -899,29 +935,29 @@ function AppContent() {
               <div>
                 <h3 className="font-semibold mb-4 text-gray-900 dark:text-gray-100 theme-transition">Features</h3>
                 <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
-                  <li><a href="#" className="hover:text-gray-900 dark:hover:text-gray-100 theme-transition">Student Dashboard</a></li>
-                  <li><a href="#" className="hover:text-gray-900 dark:hover:text-gray-100 theme-transition">AI Assistant</a></li>
-                  <li><a href="#" className="hover:text-gray-900 dark:hover:text-gray-100 theme-transition">Smart Tracker</a></li>
-                  <li><a href="#" className="hover:text-gray-900 dark:hover:text-gray-100 theme-transition">Parent Cards</a></li>
+                  <li><button onClick={() => scrollToSection('features')} className="hover:text-gray-900 dark:hover:text-gray-100 theme-transition text-left">Student Dashboard</button></li>
+                  <li><button onClick={() => scrollToSection('features')} className="hover:text-gray-900 dark:hover:text-gray-100 theme-transition text-left">AI Assistant</button></li>
+                  <li><button onClick={() => scrollToSection('features')} className="hover:text-gray-900 dark:hover:text-gray-100 theme-transition text-left">Smart Tracker</button></li>
+                  <li><button onClick={() => scrollToSection('for-parents')} className="hover:text-gray-900 dark:hover:text-gray-100 theme-transition text-left">Parent Cards</button></li>
                 </ul>
               </div>
               
               <div>
                 <h3 className="font-semibold mb-4 text-gray-900 dark:text-gray-100 theme-transition">About</h3>
                 <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
-                  <li><a href="#" className="hover:text-gray-900 dark:hover:text-gray-100 theme-transition">Our Story</a></li>
-                  <li><a href="#" className="hover:text-gray-900 dark:hover:text-gray-100 theme-transition">Team</a></li>
-                  <li><a href="#" className="hover:text-gray-900 dark:hover:text-gray-100 theme-transition">Careers</a></li>
-                  <li><a href="#" className="hover:text-gray-900 dark:hover:text-gray-100 theme-transition">Contact</a></li>
+                  <li><button onClick={() => scrollToSection('about')} className="hover:text-gray-900 dark:hover:text-gray-100 theme-transition text-left">Our Story</button></li>
+                  <li><button onClick={() => scrollToSection('about')} className="hover:text-gray-900 dark:hover:text-gray-100 theme-transition text-left">Team</button></li>
+                  <li><button onClick={() => scrollToSection('contact')} className="hover:text-gray-900 dark:hover:text-gray-100 theme-transition text-left">Careers</button></li>
+                  <li><button onClick={() => scrollToSection('contact')} className="hover:text-gray-900 dark:hover:text-gray-100 theme-transition text-left">Contact</button></li>
                 </ul>
               </div>
               
               <div>
                 <h3 className="font-semibold mb-4 text-gray-900 dark:text-gray-100 theme-transition">Legal</h3>
                 <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
-                  <li><a href="#" className="hover:text-gray-900 dark:hover:text-gray-100 theme-transition">Privacy Policy</a></li>
-                  <li><a href="#" className="hover:text-gray-900 dark:hover:text-gray-100 theme-transition">Terms of Service</a></li>
-                  <li><a href="#" className="hover:text-gray-900 dark:hover:text-gray-100 theme-transition">Cookie Policy</a></li>
+                  <li><a href="/privacy" className="hover:text-gray-900 dark:hover:text-gray-100 theme-transition">Privacy Policy</a></li>
+                  <li><a href="/terms" className="hover:text-gray-900 dark:hover:text-gray-100 theme-transition">Terms of Service</a></li>
+                  <li><a href="/cookies" className="hover:text-gray-900 dark:hover:text-gray-100 theme-transition">Cookie Policy</a></li>
                 </ul>
                 
                 <div className="mt-6 flex items-center gap-2">
