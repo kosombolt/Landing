@@ -73,7 +73,6 @@ const roles = [
     ]
   }
 ];
-const [hoveredCard, setHoveredCard] = useState<UserRole | null>(null);
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -150,6 +149,9 @@ export const RoleSelectionPage: React.FC<RoleSelectionPageProps> = ({ onClose })
   const [selectedRole, setSelectedRole] = useState<UserRole | null>(null);
   const [showDataForm, setShowDataForm] = useState(false);
   const [hoveredCard, setHoveredCard] = useState<UserRole | null>(null);
+  const { setRole } = useUser();
+const navigate = useNavigate();
+
 
   const handleRoleSelect = (role: UserRole) => {
     setSelectedRole(role);
