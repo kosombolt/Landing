@@ -45,19 +45,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onClose, onSwitchToSignup 
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
-  const LoginPage = () => {
-  const { role } = useUser(); // 👈 Get the selected role from context
-  const navigate = useNavigate();
-
-  const handleLogin = () => {
-    // ✅ Your actual login logic goes here (API call, auth, etc.)
-
-    // 🔀 After successful login:
-    if (role === "student") navigate("/dashboard/student");
-    else if (role === "teacher") navigate("/dashboard/teacher");
-    else if (role === "parent") navigate("/dashboard/parent");
-    else navigate("/"); // fallback if role is null
-  };
+  
 
   const validateEmail = (email: string): boolean => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -97,12 +85,14 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onClose, onSwitchToSignup 
       
       // Simulate successful login
       setIsSuccess(true);
-      console.log('Login successful:', formData);
-      
-      // In a real app, you would:
-      // - Send credentials to your authentication API
-      // - Store JWT token securely
-      // - Redirect to dashboard
+      // Wait a moment before redirecting
+setTimeout(() => {
+  if (role === "student") navigate("/dashboard/student");
+  else if (role === "teacher") navigate("/dashboard/teacher");
+  else if (role === "parent") navigate("/dashboard/parent");
+  else navigate("/"); // fallback
+}, 1000); // gives user 1s to see "login success" message
+
       
     } catch (error) {
       setErrors({ general: 'Invalid email or password. Please try again.' });
