@@ -463,7 +463,7 @@ function AppContent() {
                     viewport={{ once: true }}
                     className="mb-6 text-4xl font-bold tracking-tight sm:text-5xl text-balance"
                   >
-                    Simplified. Streamlined. Supercharged
+                    Simplified, Streamlined, Supercharged
                   </motion.h2>
                   
                   <motion.p
