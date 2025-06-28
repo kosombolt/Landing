@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, { createContext, useContext, useState } from "react";
 
 type UserRole = "student" | "teacher" | "parent" | null;
 
@@ -11,12 +11,10 @@ const UserContext = createContext<UserContextType | undefined>(undefined);
 
 export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [role, setRoleState] = useState<UserRole>(() => {
-    // Load initial role from localStorage
     const savedRole = localStorage.getItem("userRole");
     return (savedRole as UserRole) || null;
   });
 
-  // Update role and sync to localStorage
   const setRole = (newRole: UserRole) => {
     setRoleState(newRole);
     if (newRole) {
@@ -31,4 +29,13 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children
       {children}
     </UserContext.Provider>
   );
+};
+
+// ✅ This export is REQUIRED
+export const useUser = () => {
+  const context = useContext(UserContext);
+  if (!context) {
+    throw new Error("useUser must be used within a UserProvider");
+  }
+  return context;
 };
