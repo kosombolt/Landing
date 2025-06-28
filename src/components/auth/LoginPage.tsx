@@ -40,6 +40,14 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onClose, onSwitchToSignup 
     password: '',
     rememberMe: false
   });
+
+  const [errors, setErrors] = useState<FormErrors>({});
+  const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+
+  const { role } = useUser(); // ✅ THIS IS REQUIRED
+  const navigate = useNavigate(); // ✅ This too
   
   const [errors, setErrors] = useState<FormErrors>({});
   const [showPassword, setShowPassword] = useState(false);
