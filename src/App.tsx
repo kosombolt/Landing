@@ -39,7 +39,7 @@ return (
   
   
   </div>
-)
+):
   
 }
 const LandingPage: React.FC = () => {
