@@ -283,7 +283,7 @@ function AppContent() {
                   transition={{ duration: 0.7, delay: 0.2 }}
                   className="mb-6 text-5xl font-bold tracking-tight sm:text-6xl xl:text-7xl text-balance"
                 >
-                  Meet Rafiq – Your All-in-One Learning Companion
+                  Meet <span className="gradient-text">Rafiq</span> – Your All-in-One Learning Companion
                 </motion.h1>
                 
                 <motion.p
