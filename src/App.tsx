@@ -26,20 +26,7 @@ import { Button } from './components/ui/Button';
 import { FeatureCard } from './components/FeatureCard';
 import { TestimonialCard } from './components/TestimonialCard';
 import { ScrollRevealSection } from './components/ScrollRevealSection';
-import {BrowserRouter, Routes, Route } from "react-router-dom"
-function App() {
-return (
-  <div classname="App">
-    {
-<>
- 
-</>
-      
-    }
-  
-  
-  </div>
-):
+
   
 }
 const LandingPage: React.FC = () => {
