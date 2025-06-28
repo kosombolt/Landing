@@ -4,16 +4,10 @@ import App from './App.tsx';
 import './index.css';
 import { UserProvider } from "@/context/UserContext";
 
-export default function App() {
-  return (
-    <UserProvider>
-      <YourRouterOrRoutesHere />
-    </UserProvider>
-  );
-}
-
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <App />
+    <UserProvider>
+      <App />
+    </UserProvider>
   </StrictMode>
 );
