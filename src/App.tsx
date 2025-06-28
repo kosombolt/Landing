@@ -49,13 +49,7 @@ const fadeIn = {
     transition: { duration: 0.6 },
   },
 };
-export default function App() {
-  return (
-    <UserProvider>
-      <YourRouterOrRoutesHere />
-    </UserProvider>
-  );
-}
+
 const staggerContainer = {
   hidden: { opacity: 0 },
   visible: {
@@ -1131,3 +1125,10 @@ function App() {
 }
 
 export default App;
+export default function App() {
+  return (
+    <UserProvider>
+      <YourRouterOrRoutesHere />
+    </UserProvider>
+  );
+}
