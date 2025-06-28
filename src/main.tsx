@@ -4,8 +4,8 @@ import LandingPage from "./pages/LandingPage"; // adjust path if needed
 import StudentDashboard from "./pages/dashboard/StudentDashboard";
 import TeacherDashboard from "./pages/dashboard/TeacherDashboard";
 import ParentDashboard from "./pages/dashboard/ParentDashboard";
-import RoleSelectionPage from "./auth/RoleSelectionPage";
-import { LoginPage } from "./pages/LoginPage"; // or wherever it's located
+import RoleSelectionPage from "./components/auth/RoleSelectionPage";
+import { LoginPage } from "./components/auth/LoginPage";
 
 function App() {
   const { role } = useUser();
