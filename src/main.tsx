@@ -1,16 +1,21 @@
-import { StrictMode } from 'react';
-import { createRoot } from 'react-dom/client';
-import { BrowserRouter } from 'react-router-dom';
-import App from './App';
-import './index.css';
-import { UserProvider } from '@/context/UserContext';
+import React from 'react';
+import { Routes, Route } from 'react-router-dom';
+import { LoginPage } from './pages/LoginPage';
+import { RoleSelectionPage } from './pages/RoleSelectionPage';
+import StudentDashboard from './pages/StudentDashboard';
+import TeacherDashboard from './pages/TeacherDashboard';
+import ParentDashboard from './pages/ParentDashboard';
 
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <BrowserRouter>
-      <UserProvider>
-        <App />
-      </UserProvider>
-    </BrowserRouter>
-  </StrictMode>
-);
+function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<RoleSelectionPage />} />
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/dashboard/student" element={<StudentDashboard />} />
+      <Route path="/dashboard/teacher" element={<TeacherDashboard />} />
+      <Route path="/dashboard/parent" element={<ParentDashboard />} />
+    </Routes>
+  );
+}
+
+export default App;
