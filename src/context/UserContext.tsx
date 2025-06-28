@@ -10,31 +10,20 @@ interface UserContextType {
 const UserContext = createContext<UserContextType | undefined>(undefined);
 
 export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [role, setRole] = useState<UserRole>(null);
-
-  return (
-    <UserContext.Provider value={{ role, setRole }}>
-      {children}
-    </UserContext.Provider>
-  );
-};
-
-export const useUser = () => {
-  const context = useContext(UserContext);
-  if (!context) {
-    throw new Error("useUser must be used within a UserProvider");
-  }
-  return context;
-  export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [role, setRoleState] = useState<UserRole>(() => {
+    // Load initial role from localStorage
     const savedRole = localStorage.getItem("userRole");
     return (savedRole as UserRole) || null;
   });
 
+  // Update role and sync to localStorage
   const setRole = (newRole: UserRole) => {
     setRoleState(newRole);
-    if (newRole) localStorage.setItem("userRole", newRole);
-    else localStorage.removeItem("userRole");
+    if (newRole) {
+      localStorage.setItem("userRole", newRole);
+    } else {
+      localStorage.removeItem("userRole");
+    }
   };
 
   return (
@@ -42,5 +31,4 @@ export const useUser = () => {
       {children}
     </UserContext.Provider>
   );
-};
 };
