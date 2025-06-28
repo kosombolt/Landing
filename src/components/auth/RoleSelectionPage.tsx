@@ -150,20 +150,13 @@ export const RoleSelectionPage: React.FC<RoleSelectionPageProps> = ({ onClose })
   const navigate = useNavigate();
   const [selectedRole, setSelectedRole] = useState<UserRole | null>(null);
   const [showDataForm, setShowDataForm] = useState(false);
- 
   const [hoveredCard, setHoveredCard] = useState<UserRole | null>(null);
  
-const handleRoleSelect = (role: UserRole) => {
-  setSelectedRole(role);
-  setShowDataForm(true);
-  setRole(role); // ✅ set the global role
-  navigate("/login"); // ✅ go to login
-};
-
-
   const handleRoleSelect = (role: UserRole) => {
     setSelectedRole(role);
     setShowDataForm(true);
+    setRole(role);
+    navigate("/login");
   };
 
   const handleBackToRoles = () => {
