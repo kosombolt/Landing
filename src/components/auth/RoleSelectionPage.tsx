@@ -146,10 +146,11 @@ const featureVariants = {
 };
 
 export const RoleSelectionPage: React.FC<RoleSelectionPageProps> = ({ onClose }) => {
+  const { setRole } = useUser();
+  const navigate = useNavigate();
   const [selectedRole, setSelectedRole] = useState<UserRole | null>(null);
   const [showDataForm, setShowDataForm] = useState(false);
-   const { setRole } = useUser();
-const navigate = useNavigate();
+ 
   const [hoveredCard, setHoveredCard] = useState<UserRole | null>(null);
  
 const handleRoleSelect = (role: UserRole) => {
