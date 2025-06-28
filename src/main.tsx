@@ -7,6 +7,7 @@ import ParentDashboard from "./pages/dashboard/ParentDashboard";
 import RoleSelectionPage from "./components/auth/RoleSelectionPage";
 import { LoginPage } from "./components/auth/LoginPage";
 
+
 function App() {
   const { role } = useUser();
 
