@@ -13,6 +13,9 @@ import {
 import { Button } from '../ui/Button';
 import { Input } from '../ui/Input';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/Card';
+import { useUser } from "@/context/UserContext";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 interface LoginFormData {
   email: string;
