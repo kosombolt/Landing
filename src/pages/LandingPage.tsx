@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import { 
   Brain, 
   GraduationCap, 
@@ -19,31 +20,21 @@ import { FeatureCard } from '../components/FeatureCard';
 import { TestimonialCard } from '../components/TestimonialCard';
 import { ScrollRevealSection } from '../components/ScrollRevealSection';
 import { ThemeProvider } from '../components/ThemeProvider';
-import { AuthDemo } from '../components/auth/AuthDemo';
-import { useState } from 'react';
 
 const LandingPage: React.FC = () => {
-  const [showAuth, setShowAuth] = useState(false);
-  const [authPage, setAuthPage] = useState<'login' | 'signup' | 'role-selection'>('role-selection');
+  const navigate = useNavigate();
 
   const handleGetStarted = () => {
-    setAuthPage('role-selection');
-    setShowAuth(true);
+    navigate('/choose-role');
   };
 
   const handleLogin = () => {
-    setAuthPage('login');
-    setShowAuth(true);
+    navigate('/login');
   };
 
   const handleSignup = () => {
-    setAuthPage('signup');
-    setShowAuth(true);
+    navigate('/choose-role');
   };
-
-  if (showAuth) {
-    return <AuthDemo initialPage={authPage} />;
-  }
 
   return (
     <ThemeProvider>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useUser } from './context/UserContext';
+import LandingPage from './pages/LandingPage';
 import { RoleSelectionPage } from './components/auth/RoleSelectionPage';
 import { LoginPage } from './components/auth/LoginPage';
 import StudentDashboard from './pages/dashboard/StudentDashboard';
@@ -12,8 +13,11 @@ function App() {
 
   return (
     <Routes>
-      {/* Default route shows role selection */}
-      <Route path="/" element={<RoleSelectionPage />} />
+      {/* Default route shows landing page */}
+      <Route path="/" element={<LandingPage />} />
+      
+      {/* Role selection route */}
+      <Route path="/choose-role" element={<RoleSelectionPage />} />
       
       {/* Login route */}
       <Route path="/login" element={<LoginPage />} />
