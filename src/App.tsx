@@ -1,6 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { UserProvider } from "@/context/UserContext";
+export default function App() {
+  return (
+    <UserProvider>
+      <YourRouterOrRoutesHere />
+    </UserProvider>
+  );
+}
 import { 
   Menu, 
   X, 
