@@ -1,13 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { UserProvider } from "@/context/UserContext";
-export default function App() {
-  return (
-    <UserProvider>
-      <YourRouterOrRoutesHere />
-    </UserProvider>
-  );
-}
 import { 
   Menu, 
   X, 
@@ -56,7 +49,13 @@ const fadeIn = {
     transition: { duration: 0.6 },
   },
 };
-
+export default function App() {
+  return (
+    <UserProvider>
+      <YourRouterOrRoutesHere />
+    </UserProvider>
+  );
+}
 const staggerContainer = {
   hidden: { opacity: 0 },
   visible: {
