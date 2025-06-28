@@ -73,6 +73,7 @@ const roles = [
     ]
   }
 ];
+const [hoveredCard, setHoveredCard] = useState<UserRole | null>(null);
 
 const containerVariants = {
   hidden: { opacity: 0 },
