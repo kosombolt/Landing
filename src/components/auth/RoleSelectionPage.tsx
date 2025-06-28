@@ -9,7 +9,8 @@ import {
   ArrowRight,
   BookOpen,
   Award,
-  Home
+  Home,
+  Sparkles
 } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { StudentDataForm } from './forms/StudentDataForm';
@@ -30,6 +31,7 @@ const roles = [
     description: 'Access your personalized learning dashboard, track progress, and get AI-powered help with your studies.',
     icon: GraduationCap,
     gradient: 'from-blue-500 to-cyan-500',
+    glowColor: 'shadow-blue-500/20',
     features: [
       'Smart study planner',
       'AI tutor & mentor',
@@ -44,6 +46,7 @@ const roles = [
     description: 'Streamline your teaching with AI-powered insights, automated feedback, and comprehensive student analytics.',
     icon: Users,
     gradient: 'from-green-500 to-emerald-500',
+    glowColor: 'shadow-green-500/20',
     features: [
       'Student analytics dashboard',
       'AI-powered feedback',
@@ -58,6 +61,7 @@ const roles = [
     description: 'Stay connected with your child\'s learning journey through beautiful progress cards and AI-powered insights.',
     icon: Heart,
     gradient: 'from-pink-500 to-purple-500',
+    glowColor: 'shadow-pink-500/20',
     features: [
       'Family progress cards',
       'Learning insights',
@@ -67,9 +71,81 @@ const roles = [
   }
 ];
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      duration: 0.6,
+      staggerChildren: 0.1,
+      delayChildren: 0.2
+    }
+  }
+};
+
+const itemVariants = {
+  hidden: { 
+    opacity: 0, 
+    y: 60,
+    scale: 0.9
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      duration: 0.7,
+      ease: [0.25, 0.46, 0.45, 0.94]
+    }
+  }
+};
+
+const cardHoverVariants = {
+  rest: {
+    scale: 1,
+    y: 0,
+    rotateY: 0,
+    transition: {
+      duration: 0.4,
+      ease: "easeOut"
+    }
+  },
+  hover: {
+    scale: 1.03,
+    y: -12,
+    rotateY: 5,
+    transition: {
+      duration: 0.4,
+      ease: "easeOut"
+    }
+  },
+  tap: {
+    scale: 0.98,
+    y: -8,
+    transition: {
+      duration: 0.2,
+      ease: "easeOut"
+    }
+  }
+};
+
+const featureVariants = {
+  hidden: { opacity: 0, x: -20 },
+  visible: (i: number) => ({
+    opacity: 1,
+    x: 0,
+    transition: {
+      delay: i * 0.1,
+      duration: 0.5,
+      ease: "easeOut"
+    }
+  })
+};
+
 export const RoleSelectionPage: React.FC<RoleSelectionPageProps> = ({ onClose }) => {
   const [selectedRole, setSelectedRole] = useState<UserRole | null>(null);
   const [showDataForm, setShowDataForm] = useState(false);
+  const [hoveredCard, setHoveredCard] = useState<UserRole | null>(null);
 
   const handleRoleSelect = (role: UserRole) => {
     setSelectedRole(role);
@@ -97,145 +173,397 @@ export const RoleSelectionPage: React.FC<RoleSelectionPageProps> = ({ onClose })
   };
 
   if (showDataForm) {
-    return renderDataForm();
+    return (
+      <AnimatePresence mode="wait">
+        <motion.div
+          key="data-form"
+          initial={{ opacity: 0, x: 100 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: -100 }}
+          transition={{ duration: 0.5, ease: "easeInOut" }}
+        >
+          {renderDataForm()}
+        </motion.div>
+      </AnimatePresence>
+    );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-purple-50/30 dark:from-gray-950 dark:via-gray-900 dark:to-purple-950/20 flex items-center justify-center p-6 theme-transition">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-purple-50/30 dark:from-gray-950 dark:via-gray-900 dark:to-purple-950/20 flex items-center justify-center p-6 theme-transition overflow-hidden">
       {/* Escape Button */}
       {onClose && (
-        <button
+        <motion.button
           onClick={onClose}
-          className="fixed top-6 right-6 z-50 h-12 w-12 rounded-full glass-effect shadow-lg hover:shadow-xl theme-transition flex items-center justify-center text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 hover:scale-110 active:scale-95 transition-all duration-150"
+          className="fixed top-6 right-6 z-50 h-12 w-12 rounded-full glass-effect shadow-lg hover:shadow-xl theme-transition flex items-center justify-center text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100"
+          whileHover={{ 
+            scale: 1.1, 
+            rotate: 90,
+            transition: { duration: 0.3 }
+          }}
+          whileTap={{ scale: 0.95 }}
+          initial={{ opacity: 0, scale: 0 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.5, duration: 0.4 }}
         >
           <X className="h-6 w-6" />
-        </button>
+        </motion.button>
       )}
 
-      {/* Background Elements */}
-      <div className="absolute inset-0">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-pink-500/10 dark:bg-pink-500/5 mix-blend-normal filter blur-[128px] animate-pulse animation-delay-200" />
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500/10 dark:bg-purple-500/5 mix-blend-normal filter blur-[128px] animate-pulse animation-delay-800" />
+      {/* Enhanced Background Elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        <motion.div 
+          className="absolute top-1/4 left-1/4 w-96 h-96 bg-pink-500/10 dark:bg-pink-500/5 mix-blend-normal filter blur-[128px]"
+          animate={{
+            scale: [1, 1.2, 1],
+            rotate: [0, 180, 360],
+            opacity: [0.3, 0.6, 0.3]
+          }}
+          transition={{
+            duration: 20,
+            repeat: Infinity,
+            ease: "linear"
+          }}
+        />
+        <motion.div 
+          className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500/10 dark:bg-purple-500/5 mix-blend-normal filter blur-[128px]"
+          animate={{
+            scale: [1.2, 1, 1.2],
+            rotate: [360, 180, 0],
+            opacity: [0.6, 0.3, 0.6]
+          }}
+          transition={{
+            duration: 25,
+            repeat: Infinity,
+            ease: "linear"
+          }}
+        />
+        <motion.div 
+          className="absolute top-1/2 left-1/2 w-64 h-64 bg-blue-500/10 dark:bg-blue-500/5 mix-blend-normal filter blur-[96px] transform -translate-x-1/2 -translate-y-1/2"
+          animate={{
+            scale: [1, 1.3, 1],
+            opacity: [0.2, 0.5, 0.2]
+          }}
+          transition={{
+            duration: 15,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
       </div>
 
-      <div className="w-full max-w-6xl relative z-10">
+      <motion.div 
+        className="w-full max-w-7xl relative z-10"
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+      >
         {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-12"
+          variants={itemVariants}
+          className="text-center mb-16"
         >
-          <div className="flex items-center justify-center gap-3 mb-6">
-            <div className="h-16 w-16 rounded-2xl bg-gradient-to-br from-pink-500 to-purple-600 flex items-center justify-center shadow-lg glow-effect">
-              <Brain className="h-8 w-8 text-white" />
-            </div>
-            <span className="font-bold text-3xl gradient-text">
+          <motion.div 
+            className="flex items-center justify-center gap-3 mb-8"
+            whileHover={{ scale: 1.05 }}
+            transition={{ duration: 0.3 }}
+          >
+            <motion.div 
+              className="h-16 w-16 rounded-2xl bg-gradient-to-br from-pink-500 to-purple-600 flex items-center justify-center shadow-lg glow-effect"
+              animate={{
+                boxShadow: [
+                  "0 0 20px rgba(236, 72, 153, 0.3)",
+                  "0 0 40px rgba(147, 51, 234, 0.4)",
+                  "0 0 20px rgba(236, 72, 153, 0.3)"
+                ]
+              }}
+              transition={{
+                duration: 3,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+            >
+              <motion.div
+                animate={{ rotate: [0, 360] }}
+                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+              >
+                <Brain className="h-8 w-8 text-white" />
+              </motion.div>
+            </motion.div>
+            <motion.span 
+              className="font-bold text-3xl gradient-text"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.3, duration: 0.6 }}
+            >
               Rafiq
-            </span>
-          </div>
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-gray-100 mb-4 theme-transition">
+            </motion.span>
+          </motion.div>
+          
+          <motion.h1
+            className="text-4xl md:text-6xl font-bold text-gray-900 dark:text-gray-100 mb-6 theme-transition"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4, duration: 0.8 }}
+          >
             Choose Your Path
-          </h1>
-          <p className="text-xl text-gray-600 dark:text-gray-400 theme-transition max-w-2xl mx-auto">
+          </motion.h1>
+          
+          <motion.p
+            className="text-xl text-gray-600 dark:text-gray-400 theme-transition max-w-2xl mx-auto"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6, duration: 0.6 }}
+          >
             Tell us who you are so we can personalize your Rafiq experience
-          </p>
+          </motion.p>
+          
+          {/* Floating sparkles */}
+          <motion.div className="absolute inset-0 pointer-events-none">
+            {[...Array(6)].map((_, i) => (
+              <motion.div
+                key={i}
+                className="absolute"
+                style={{
+                  left: `${20 + i * 15}%`,
+                  top: `${30 + (i % 2) * 20}%`,
+                }}
+                animate={{
+                  y: [0, -20, 0],
+                  opacity: [0.3, 1, 0.3],
+                  scale: [0.8, 1.2, 0.8],
+                }}
+                transition={{
+                  duration: 3 + i * 0.5,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  delay: i * 0.5
+                }}
+              >
+                <Sparkles className="h-4 w-4 text-pink-400" />
+              </motion.div>
+            ))}
+          </motion.div>
         </motion.div>
 
         {/* Role Cards */}
-        <div className="grid gap-8 md:grid-cols-3 mb-12">
+        <motion.div 
+          className="grid gap-8 md:grid-cols-3 mb-16 perspective-1000"
+          variants={containerVariants}
+        >
           {roles.map((role, index) => {
             const Icon = role.icon;
             return (
               <motion.div
                 key={role.id}
-                initial={{ opacity: 0, y: 50 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.2 }}
-                className="group relative overflow-hidden"
+                variants={itemVariants}
+                custom={index}
+                className="group relative overflow-hidden transform-gpu"
+                onHoverStart={() => setHoveredCard(role.id)}
+                onHoverEnd={() => setHoveredCard(null)}
               >
-                <div 
-                  className="glass-effect-strong p-8 rounded-3xl hover:glass-effect theme-transition hover-lift cursor-pointer h-full transition-transform duration-300 hover:scale-[1.02]"
+                <motion.div 
+                  className={`glass-effect-strong p-8 rounded-3xl cursor-pointer h-full transition-all duration-500 hover:glass-effect ${role.glowColor} hover:shadow-2xl`}
+                  variants={cardHoverVariants}
+                  initial="rest"
+                  whileHover="hover"
+                  whileTap="tap"
                   onClick={() => handleRoleSelect(role.id)}
+                  style={{ transformStyle: "preserve-3d" }}
                 >
                   
-                  {/* Gradient Background */}
-                  <div className={`absolute -top-20 -right-20 w-40 h-40 bg-gradient-to-br ${role.gradient} opacity-10 group-hover:opacity-20 rounded-full theme-transition animate-float`} />
+                  {/* Enhanced Gradient Background */}
+                  <motion.div 
+                    className={`absolute -top-20 -right-20 w-40 h-40 bg-gradient-to-br ${role.gradient} opacity-10 rounded-full`}
+                    animate={{
+                      scale: hoveredCard === role.id ? [1, 1.3, 1] : 1,
+                      opacity: hoveredCard === role.id ? [0.1, 0.3, 0.1] : 0.1,
+                      rotate: [0, 360]
+                    }}
+                    transition={{
+                      scale: { duration: 2, ease: "easeInOut" },
+                      opacity: { duration: 2, ease: "easeInOut" },
+                      rotate: { duration: 20, repeat: Infinity, ease: "linear" }
+                    }}
+                  />
+                  
+                  {/* Shimmer effect */}
+                  <motion.div
+                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700"
+                    initial={false}
+                    animate={hoveredCard === role.id ? { opacity: 1 } : { opacity: 0 }}
+                  >
+                    <div 
+                      className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -skew-x-12"
+                      style={{
+                        animation: hoveredCard === role.id ? 'shimmer 1.5s ease-in-out' : 'none'
+                      }}
+                    />
+                  </motion.div>
                   
                   <div className="relative z-10">
-                    {/* Icon */}
-                    <div className={`mb-6 inline-flex h-16 w-16 items-center justify-center bg-gradient-to-br ${role.gradient} text-white rounded-2xl shadow-lg glow-effect group-hover:scale-110 transition-transform duration-300`}>
+                    {/* Enhanced Icon */}
+                    <motion.div 
+                      className={`mb-6 inline-flex h-16 w-16 items-center justify-center bg-gradient-to-br ${role.gradient} text-white rounded-2xl shadow-lg glow-effect`}
+                      whileHover={{
+                        rotate: [0, -10, 10, 0],
+                        scale: 1.15,
+                        transition: { duration: 0.6, ease: "easeInOut" }
+                      }}
+                      animate={{
+                        boxShadow: hoveredCard === role.id 
+                          ? ["0 0 20px rgba(59, 130, 246, 0.3)", "0 0 40px rgba(59, 130, 246, 0.5)", "0 0 20px rgba(59, 130, 246, 0.3)"]
+                          : "0 0 20px rgba(59, 130, 246, 0.2)"
+                      }}
+                      transition={{
+                        boxShadow: { duration: 2, repeat: Infinity, ease: "easeInOut" }
+                      }}
+                    >
                       <Icon className="h-8 w-8" />
-                    </div>
+                    </motion.div>
                     
                     {/* Content */}
-                    <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2 theme-transition">
+                    <motion.h3 
+                      className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2 theme-transition"
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.2 + index * 0.1, duration: 0.5 }}
+                    >
                       {role.title}
-                    </h3>
-                    <p className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-4 theme-transition">
-                      {role.subtitle}
-                    </p>
-                    <p className="text-gray-700 dark:text-gray-300 mb-6 leading-relaxed theme-transition">
-                      {role.description}
-                    </p>
+                    </motion.h3>
                     
-                    {/* Features */}
-                    <ul className="space-y-3">
+                    <motion.p 
+                      className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-4 theme-transition"
+                      initial={{ opacity: 0, y: 15 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.3 + index * 0.1, duration: 0.5 }}
+                    >
+                      {role.subtitle}
+                    </motion.p>
+                    
+                    <motion.p 
+                      className="text-gray-700 dark:text-gray-300 mb-6 leading-relaxed theme-transition"
+                      initial={{ opacity: 0, y: 15 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.4 + index * 0.1, duration: 0.5 }}
+                    >
+                      {role.description}
+                    </motion.p>
+                    
+                    {/* Enhanced Features */}
+                    <motion.ul className="space-y-3 mb-6">
                       {role.features.map((feature, featureIndex) => (
                         <motion.li
                           key={featureIndex}
-                          initial={{ opacity: 0, x: -10 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          transition={{ delay: (index * 0.2) + (featureIndex * 0.1) + 0.5 }}
+                          variants={featureVariants}
+                          custom={featureIndex}
+                          initial="hidden"
+                          animate="visible"
                           className="flex items-center gap-3 text-sm text-gray-600 dark:text-gray-400 theme-transition"
                         >
-                          <div className={`h-2 w-2 bg-gradient-to-r ${role.gradient} rounded-full group-hover:scale-125 transition-transform duration-300`} />
-                          <span className="group-hover:text-gray-900 dark:group-hover:text-gray-100 transition-colors duration-300">
+                          <motion.div 
+                            className={`h-2 w-2 bg-gradient-to-r ${role.gradient} rounded-full`}
+                            whileHover={{ scale: 1.5 }}
+                            animate={hoveredCard === role.id ? {
+                              scale: [1, 1.3, 1],
+                              opacity: [0.7, 1, 0.7]
+                            } : {}}
+                            transition={{
+                              duration: 1.5,
+                              repeat: hoveredCard === role.id ? Infinity : 0,
+                              ease: "easeInOut"
+                            }}
+                          />
+                          <motion.span 
+                            className="group-hover:text-gray-900 dark:group-hover:text-gray-100 transition-colors duration-300"
+                            whileHover={{ x: 5 }}
+                          >
                             {feature}
-                          </span>
+                          </motion.span>
                         </motion.li>
                       ))}
-                    </ul>
+                    </motion.ul>
 
-                    {/* Hover indicator */}
-                    <div className="mt-8 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <div className="flex items-center gap-2 text-sm font-medium text-gray-500 dark:text-gray-400">
+                    {/* Enhanced hover indicator */}
+                    <motion.div 
+                      className="flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-500"
+                      initial={{ y: 20 }}
+                      animate={hoveredCard === role.id ? { y: 0 } : { y: 20 }}
+                    >
+                      <motion.div 
+                        className="flex items-center gap-2 text-sm font-medium text-gray-500 dark:text-gray-400 bg-white/50 dark:bg-gray-800/50 px-4 py-2 rounded-full backdrop-blur-sm"
+                        whileHover={{ scale: 1.05 }}
+                      >
                         <span>Click to continue</span>
-                        <ArrowRight className="h-4 w-4 transform group-hover:translate-x-1 transition-transform duration-300" />
-                      </div>
-                    </div>
+                        <motion.div
+                          animate={{ x: [0, 5, 0] }}
+                          transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                        >
+                          <ArrowRight className="h-4 w-4" />
+                        </motion.div>
+                      </motion.div>
+                    </motion.div>
                   </div>
-                </div>
+                </motion.div>
               </motion.div>
             );
           })}
-        </div>
+        </motion.div>
 
-        {/* Bottom Section */}
+        {/* Enhanced Bottom Section */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.8 }}
+          variants={itemVariants}
           className="text-center"
         >
-          <div className="glass-effect p-6 rounded-2xl max-w-2xl mx-auto">
-            <div className="flex items-center justify-center gap-2 mb-4">
+          <motion.div 
+            className="glass-effect p-8 rounded-3xl max-w-2xl mx-auto hover:glass-effect-strong transition-all duration-500"
+            whileHover={{ 
+              scale: 1.02,
+              y: -5,
+              transition: { duration: 0.3 }
+            }}
+          >
+            <motion.div 
+              className="flex items-center justify-center gap-2 mb-6"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 1, duration: 0.5 }}
+            >
               <div className="flex items-center gap-1">
                 {[BookOpen, Award, Home].map((Icon, index) => (
-                  <div
+                  <motion.div
                     key={index}
                     className="h-8 w-8 rounded-lg bg-gradient-to-br from-pink-500/20 to-purple-500/20 flex items-center justify-center"
+                    whileHover={{ 
+                      scale: 1.2, 
+                      rotate: 360,
+                      transition: { duration: 0.5 }
+                    }}
+                    animate={{
+                      y: [0, -5, 0],
+                    }}
+                    transition={{
+                      duration: 2 + index * 0.5,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                      delay: index * 0.2
+                    }}
                   >
                     <Icon className="h-4 w-4 text-pink-500" />
-                  </div>
+                  </motion.div>
                 ))}
               </div>
-            </div>
-            <p className="text-sm text-gray-600 dark:text-gray-400 theme-transition">
+            </motion.div>
+            <motion.p 
+              className="text-sm text-gray-600 dark:text-gray-400 theme-transition leading-relaxed"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.2, duration: 0.6 }}
+            >
               Not sure which role fits you best? Don't worry! You can always change your preferences later in your account settings.
-            </p>
-          </div>
+            </motion.p>
+          </motion.div>
         </motion.div>
-      </div>
+      </motion.div>
     </div>
   );
 };
