@@ -726,7 +726,7 @@ function AppContent() {
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.7, delay: 0.4 }}
                   viewport={{ once: true }}
-                  className="mb-8 text-2xl text-gray-600 dark:text-gray-400 theme-transition"
+                  className="mb-12 text-2xl text-gray-600 dark:text-gray-400 theme-transition"
                 >
                   And every parent who didn't know how to help.
                 </motion.p>
@@ -742,7 +742,7 @@ function AppContent() {
                     className="h-16 px-12 text-xl hover-lift glow-effect whitespace-nowrap"
                     onClick={() => setAuthPage('role-selection')}
                   >
-                    <span className="whitespace-nowrap">Start your journey with Rafiq. Today.</span>
+                    <span className="whitespace-nowrap">Start your journey today</span>
                   </Button>
                 </motion.div>
               </div>
