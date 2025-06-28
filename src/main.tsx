@@ -4,7 +4,7 @@ import LandingPage from "./pages/LandingPage"; // adjust path if needed
 import StudentDashboard from "./pages/dashboard/StudentDashboard";
 import TeacherDashboard from "./pages/dashboard/TeacherDashboard";
 import ParentDashboard from "./pages/dashboard/ParentDashboard";
-import RoleSelectionPage from "./components/auth/RoleSelectionPage";
+import { RoleSelectionPage } from "./components/auth/RoleSelectionPage";
 import { LoginPage } from "./components/auth/LoginPage";
 
 
