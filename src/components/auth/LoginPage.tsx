@@ -45,7 +45,9 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onClose, onSwitchToSignup 
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
-  
+  const { role } = useUser();
+const navigate = useNavigate();
+
 
   const validateEmail = (email: string): boolean => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
