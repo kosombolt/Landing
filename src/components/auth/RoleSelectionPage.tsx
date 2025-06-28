@@ -16,6 +16,9 @@ import { Button } from '../ui/Button';
 import { StudentDataForm } from './forms/StudentDataForm';
 import { TeacherDataForm } from './forms/TeacherDataForm';
 import { ParentDataForm } from './forms/ParentDataForm';
+import { useUser } from '@/context/UserContext';
+import { useNavigate } from 'react-router-dom';
+
 
 type UserRole = 'student' | 'teacher' | 'parent';
 
