@@ -27,8 +27,6 @@ import { FeatureCard } from './components/FeatureCard';
 import { TestimonialCard } from './components/TestimonialCard';
 import { ScrollRevealSection } from './components/ScrollRevealSection';
 
-  
-}
 const LandingPage: React.FC = () => {
   const navigate = useNavigate();
 
