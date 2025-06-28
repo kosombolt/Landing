@@ -98,7 +98,7 @@ function AppContent() {
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
     setIsMenuOpen(false);
   };
@@ -135,6 +135,7 @@ function AppContent() {
             <nav className="hidden md:flex gap-6">
               {[
                 { name: "Features", id: "features" },
+                { name: "For Students", id: "for-students" },
                 { name: "For Teachers", id: "for-teachers" },
                 { name: "For Parents", id: "for-parents" },
                 { name: "About", id: "about" },
@@ -222,6 +223,7 @@ function AppContent() {
               >
                 {[
                   { name: "Features", id: "features" },
+                  { name: "For Students", id: "for-students" },
                   { name: "For Teachers", id: "for-teachers" },
                   { name: "For Parents", id: "for-parents" },
                   { name: "About", id: "about" },
@@ -321,13 +323,27 @@ function AppContent() {
                   transition={{ duration: 0.7, delay: 0.6 }}
                   className="flex flex-col gap-4 sm:flex-row sm:justify-center"
                 >
-                  <Button size="lg" className="h-14 px-10 text-lg hover-lift glow-effect whitespace-nowrap">
+                  <Button 
+                    size="lg" 
+                    className="h-14 px-10 text-lg hover-lift glow-effect whitespace-nowrap"
+                    onClick={() => scrollToSection('for-students')}
+                  >
                     <span className="whitespace-nowrap">Explore Student Dashboard</span>
                   </Button>
-                  <Button variant="outline" size="lg" className="h-14 px-8 text-lg hover-lift whitespace-nowrap">
+                  <Button 
+                    variant="outline" 
+                    size="lg" 
+                    className="h-14 px-8 text-lg hover-lift whitespace-nowrap"
+                    onClick={() => scrollToSection('features')}
+                  >
                     Try Smart Tracker
                   </Button>
-                  <Button variant="outline" size="lg" className="h-14 px-8 text-lg hover-lift whitespace-nowrap">
+                  <Button 
+                    variant="outline" 
+                    size="lg" 
+                    className="h-14 px-8 text-lg hover-lift whitespace-nowrap"
+                    onClick={() => scrollToSection('for-parents')}
+                  >
                     Discover Parent Cards
                   </Button>
                 </motion.div>
@@ -390,6 +406,101 @@ function AppContent() {
                   description="Beautifully organized course materials with progress tracking and personalized recommendations."
                   delay={0.2}
                 />
+              </div>
+            </div>
+          </ScrollRevealSection>
+
+          {/* For Students Section */}
+          <ScrollRevealSection className="py-20 md:py-32 bg-gradient-to-br from-blue-50/50 to-cyan-50/50 dark:from-blue-950/20 dark:to-cyan-950/20 w-full theme-transition" id="for-students">
+            <div className="w-full px-6 max-w-none">
+              <div className="grid gap-12 lg:grid-cols-2 lg:gap-16 items-center max-w-7xl mx-auto">
+                <div>
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.5 }}
+                    viewport={{ once: true }}
+                    className="mb-6 inline-flex items-center glass-effect px-4 py-2 text-sm rounded-full"
+                  >
+                    <BookOpen className="mr-2 h-4 w-4 text-blue-500" />
+                    For Students
+                  </motion.div>
+                  
+                  <motion.h2
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.2 }}
+                    viewport={{ once: true }}
+                    className="mb-6 text-4xl font-bold tracking-tight sm:text-5xl text-balance"
+                  >
+                    Your Personal Learning Companion
+                  </motion.h2>
+                  
+                  <motion.p
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.3 }}
+                    viewport={{ once: true }}
+                    className="mb-8 text-xl text-gray-600 dark:text-gray-400 leading-relaxed text-balance"
+                  >
+                    Focus on learning, not distractions. Rafiq adapts to your style and helps you achieve your goals.
+                  </motion.p>
+                  
+                  <div className="space-y-4">
+                    {[
+                      "AI tutor available 24/7 for instant help",
+                      "Personalized study schedules based on your peak hours",
+                      "Progress tracking with beautiful visualizations",
+                      "Distraction-free environment designed for focus"
+                    ].map((feature, index) => (
+                      <motion.div
+                        key={index}
+                        initial={{ opacity: 0, x: -20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.5, delay: 0.4 + index * 0.1 }}
+                        viewport={{ once: true }}
+                        className="flex items-center gap-3"
+                      >
+                        <div className="h-2 w-2 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full" />
+                        <span className="text-gray-900 dark:text-gray-100 theme-transition">{feature}</span>
+                      </motion.div>
+                    ))}
+                  </div>
+                </div>
+                
+                <motion.div
+                  initial={{ opacity: 0, x: 50 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.6 }}
+                  viewport={{ once: true }}
+                  className="relative"
+                >
+                  <div className="glass-effect p-8 rounded-2xl hover-lift">
+                    <div className="mb-6 flex items-center gap-3">
+                      <div className="h-12 w-12 bg-gradient-to-br from-blue-500 to-cyan-600 rounded-xl flex items-center justify-center shadow-lg">
+                        <BookOpen className="h-6 w-6 text-white" />
+                      </div>
+                      <div>
+                        <h3 className="font-semibold text-gray-900 dark:text-gray-100 theme-transition">Student Dashboard</h3>
+                        <p className="text-sm text-gray-600 dark:text-gray-400 theme-transition">Your learning hub</p>
+                      </div>
+                    </div>
+                    <div className="space-y-4">
+                      <div className="flex justify-between items-center p-3 bg-gray-100/50 dark:bg-gray-800/50 rounded-xl theme-transition">
+                        <span className="text-sm text-gray-700 dark:text-gray-300 theme-transition">Study Streak</span>
+                        <Badge variant="secondary">12 days</Badge>
+                      </div>
+                      <div className="flex justify-between items-center p-3 bg-gray-100/50 dark:bg-gray-800/50 rounded-xl theme-transition">
+                        <span className="text-sm text-gray-700 dark:text-gray-300 theme-transition">Courses Completed</span>
+                        <Badge variant="secondary">8/12</Badge>
+                      </div>
+                      <div className="flex justify-between items-center p-3 bg-gray-100/50 dark:bg-gray-800/50 rounded-xl theme-transition">
+                        <span className="text-sm text-gray-700 dark:text-gray-300 theme-transition">AI Sessions Today</span>
+                        <Badge variant="secondary">3</Badge>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
               </div>
             </div>
           </ScrollRevealSection>
@@ -664,8 +775,8 @@ function AppContent() {
             </div>
           </ScrollRevealSection>
 
-          {/* About Section */}
-          <ScrollRevealSection className="py-20 md:py-32 w-full" id="about">
+          {/* Testimonials */}
+          <ScrollRevealSection className="py-20 md:py-32 bg-gradient-to-br from-purple-50/50 to-pink-50/50 dark:from-purple-950/20 dark:to-pink-950/20 w-full theme-transition">
             <div className="w-full px-6 max-w-none">
               <div className="mx-auto max-w-4xl text-center mb-16">
                 <motion.div
@@ -713,8 +824,8 @@ function AppContent() {
             </div>
           </ScrollRevealSection>
 
-          {/* Emotional Ending */}
-          <ScrollRevealSection className="py-20 md:py-32 w-full">
+          {/* About Section */}
+          <ScrollRevealSection className="py-20 md:py-32 w-full" id="about">
             <div className="w-full px-6 max-w-none">
               <div className="mx-auto max-w-4xl text-center">
                 <motion.h2
@@ -724,7 +835,7 @@ function AppContent() {
                   viewport={{ once: true }}
                   className="mb-8 text-4xl font-bold tracking-tight sm:text-5xl leading-tight text-balance"
                 >
-                  We built Rafiq for every student who felt{" "}
+                  We built <span className="gradient-text">Rafiq</span> for every student who felt{" "}
                   <span className="gradient-text">
                     overwhelmed
                   </span>
@@ -750,10 +861,20 @@ function AppContent() {
                   And every parent who didn't know how to help.
                 </motion.p>
                 
-                <motion.div
+                <motion.p
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.7, delay: 0.6 }}
+                  viewport={{ once: true }}
+                  className="mb-12 text-3xl font-semibold gradient-text"
+                >
+                  This is education, made human.
+                </motion.p>
+                
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.7, delay: 0.8 }}
                   viewport={{ once: true }}
                 >
                   <Button 
@@ -914,16 +1035,17 @@ function AppContent() {
                 </p>
                 <div className="flex space-x-4">
                   {[
-                    { Icon: Instagram, href: "https://instagram.com/rafiq" },
-                    { Icon: Twitter, href: "https://twitter.com/rafiq" },
-                    { Icon: Linkedin, href: "https://linkedin.com/company/rafiq" },
-                    { Icon: Facebook, href: "https://facebook.com/rafiq" }
-                  ].map(({ Icon, href }, index) => (
+                    { Icon: Instagram, href: "https://instagram.com/rafiq", label: "Instagram" },
+                    { Icon: Twitter, href: "https://twitter.com/rafiq", label: "Twitter" },
+                    { Icon: Linkedin, href: "https://linkedin.com/company/rafiq", label: "LinkedIn" },
+                    { Icon: Facebook, href: "https://facebook.com/rafiq", label: "Facebook" }
+                  ].map(({ Icon, href, label }, index) => (
                     <a
                       key={index}
                       href={href}
                       target="_blank"
                       rel="noopener noreferrer"
+                      aria-label={label}
                       className="h-10 w-10 border border-gray-300/50 dark:border-gray-700/50 rounded-xl flex items-center justify-center hover:bg-gray-100/50 dark:hover:bg-gray-800/50 theme-transition hover-lift"
                     >
                       <Icon className="h-5 w-5 text-gray-600 dark:text-gray-400 theme-transition" />
@@ -935,7 +1057,7 @@ function AppContent() {
               <div>
                 <h3 className="font-semibold mb-4 text-gray-900 dark:text-gray-100 theme-transition">Features</h3>
                 <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
-                  <li><button onClick={() => scrollToSection('features')} className="hover:text-gray-900 dark:hover:text-gray-100 theme-transition text-left">Student Dashboard</button></li>
+                  <li><button onClick={() => scrollToSection('for-students')} className="hover:text-gray-900 dark:hover:text-gray-100 theme-transition text-left">Student Dashboard</button></li>
                   <li><button onClick={() => scrollToSection('features')} className="hover:text-gray-900 dark:hover:text-gray-100 theme-transition text-left">AI Assistant</button></li>
                   <li><button onClick={() => scrollToSection('features')} className="hover:text-gray-900 dark:hover:text-gray-100 theme-transition text-left">Smart Tracker</button></li>
                   <li><button onClick={() => scrollToSection('for-parents')} className="hover:text-gray-900 dark:hover:text-gray-100 theme-transition text-left">Parent Cards</button></li>
