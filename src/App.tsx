@@ -731,20 +731,10 @@ function AppContent() {
                   And every parent who didn't know how to help.
                 </motion.p>
                 
-                <motion.p
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.7, delay: 0.6 }}
-                  viewport={{ once: true }}
-                  className="mb-12 text-3xl font-semibold gradient-text"
-                >
-                  This is education, made human.
-                </motion.p>
-                
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.7, delay: 0.8 }}
+                  transition={{ duration: 0.7, delay: 0.6 }}
                   viewport={{ once: true }}
                 >
                   <Button 
