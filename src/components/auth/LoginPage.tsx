@@ -45,6 +45,19 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onClose, onSwitchToSignup 
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const LoginPage = () => {
+  const { role } = useUser(); // 👈 Get the selected role from context
+  const navigate = useNavigate();
+
+  const handleLogin = () => {
+    // ✅ Your actual login logic goes here (API call, auth, etc.)
+
+    // 🔀 After successful login:
+    if (role === "student") navigate("/dashboard/student");
+    else if (role === "teacher") navigate("/dashboard/teacher");
+    else if (role === "parent") navigate("/dashboard/parent");
+    else navigate("/"); // fallback if role is null
+  };
 
   const validateEmail = (email: string): boolean => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
