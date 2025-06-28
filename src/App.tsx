@@ -1115,7 +1115,13 @@ function AppContent() {
     </div>
   );
 }
-
+export default function App() {
+  return (
+    <UserProvider>
+      <YourRouterOrRoutesHere />
+    </UserProvider>
+  );
+}
 function App() {
   return (
     <ThemeProvider>
@@ -1125,10 +1131,3 @@ function App() {
 }
 
 export default App;
-export default function App() {
-  return (
-    <UserProvider>
-      <YourRouterOrRoutesHere />
-    </UserProvider>
-  );
-}
