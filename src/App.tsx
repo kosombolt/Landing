@@ -1103,7 +1103,7 @@ function AppContent() {
             
             <div className="mt-12 pt-8 border-t border-gray-200/50 dark:border-gray-800/50 flex flex-col md:flex-row justify-between items-center gap-4 max-w-7xl mx-auto theme-transition">
               <p className="text-sm text-gray-600 dark:text-gray-400 theme-transition">
-                © 2024 Rafiq. All rights reserved. Made with ❤️ for education.
+                © 2025 Rafiq. All rights reserved. Made with ❤️ for education.
               </p>
               <p className="text-sm text-gray-600 dark:text-gray-400 theme-transition">
                 Bringing calm, focus, and progress back into education.
@@ -1115,13 +1115,7 @@ function AppContent() {
     </div>
   );
 }
-export default function App() {
-  return (
-    <UserProvider>
-      <YourRouterOrRoutesHere />
-    </UserProvider>
-  );
-}
+
 function App() {
   return (
     <ThemeProvider>
